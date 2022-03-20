@@ -12,7 +12,7 @@
                 "*://*.soundcloud.com/*"
             ],
             "js": [
-                "services/soundcloud.ts"
+                "services/soundcloud/script.ts"
             ]
         }
     ]
