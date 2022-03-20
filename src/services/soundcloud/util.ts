@@ -5,7 +5,8 @@ const classes = {
     album_art: "sc-artwork sc-artwork-4x sc-artwork-placeholder-10  image__full g-opacity-transition",
     artist: "playbackSoundBadge__lightLink sc-link-light sc-link-secondary sc-truncate sc-text-h5",
     title: "playbackSoundBadge__titleLink sc-truncate sc-text-h5 sc-link-primary",
-    progress_bar: "playbackTimeline__progressWrapper sc-mx-1x"
+    progress_bar: "playbackTimeline__progressWrapper sc-mx-1x",
+    play_button: "playControl sc-ir playControls__control playControls__play"
 }
 
 function getLinkTitle(classID: string): string | null {
@@ -45,12 +46,20 @@ function getElapsed(): number | null {
     return parseInt(valuenow) * 1000
 }
 
+function isPaused(): boolean {
+    const element = getFirstElement(classes.play_button)
+    if (!element) return true
+
+    return !element.classList.contains("playing")
+}
+
 export function getTrackInfo(): TrackInfo | null {
     const title = getLinkTitle(classes.title) ?? "Unknown title"
     const artist = getLinkTitle(classes.artist) ?? "Unknown artist"
     const album_art = getAlbumArt()
     const duration = getDuration() ?? 0
     const elapsed = getElapsed() ?? 0
+    const paused = isPaused()
 
-    return { title, artist, album_art, timestamps: { duration, elapsed } }
+    return { title, artist, album_art, timestamps: { duration, elapsed }, paused }
 }

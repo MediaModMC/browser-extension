@@ -6,4 +6,5 @@ export interface TrackInfo {
         duration: number
         elapsed: number
     }
+    paused: boolean
 }
