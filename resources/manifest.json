@@ -5,5 +5,15 @@
     "manifest_version": 2,
     "permissions": [
         "*://localhost/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.soundcloud.com/*"
+            ],
+            "js": [
+                "services/soundcloud.js"
+            ]
+        }
     ]
 }
