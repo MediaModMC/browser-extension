@@ -4,6 +4,7 @@ yarn-error.log
 
 # Build Files
 dist/
+.parcel-cache/
 
 # IDEs
 .idea/
