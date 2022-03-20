@@ -1,0 +1,14 @@
+{
+    "name": "mediamod-browser-extension",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "license": "LGPL-3.0",
+    "scripts": {
+        "build": "tsc && yarn resources",
+        "resources": "cp resources/** dist"
+    },
+    "devDependencies": {
+        "@types/chrome": "^0.0.180",
+        "typescript": "^4.6.2"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "name": "MediaMod Integration",
+    "description": "View your current song inside Minecraft with support for YouTube, Soundcloud & more!",
+    "version": "1.0",
+    "manifest_version": 2,
+    "permissions": [
+        "*://localhost/*"
+    ]
+}

@@ -1,0 +1,10 @@
+# Node / Yarn
+node_modules/
+yarn-error.log
+
+# Build Files
+dist/
+
+# IDEs
+.idea/
+.vscode/
