@@ -8,7 +8,7 @@ async function sendData() {
     try {
         await ClientConnection.getInstance().sendTrack(info)
     } catch (e) {
-        console.error("Failed to send track information to the MediaMod client!")
+        console.error(`Failed to send track information to the MediaMod client: ${JSON.stringify(info)}`)
     }
 
     setTimeout(sendData, 1500)
