@@ -1,12 +1,9 @@
+import { getFirstElement } from "../utils/dom"
+
 const classes = {
     album_art: "sc-artwork sc-artwork-4x sc-artwork-placeholder-10  image__full g-opacity-transition",
     artist: "playbackSoundBadge__lightLink sc-link-light sc-link-secondary sc-truncate sc-text-h5",
     title: "playbackSoundBadge__titleLink sc-truncate sc-text-h5 sc-link-primary"
-}
-
-function getFirstElement(classId: string): Element | null {
-    const elements = document.getElementsByClassName(classId)
-    return elements.item(0)
 }
 
 function getAlbumArt(): string | null {
