@@ -1,10 +1,19 @@
 import { getFirstElement } from "../utils/dom"
+import { TrackInfo } from "../core/types"
 
 const classes = {
     album_art: "sc-artwork sc-artwork-4x sc-artwork-placeholder-10  image__full g-opacity-transition",
     artist: "playbackSoundBadge__lightLink sc-link-light sc-link-secondary sc-truncate sc-text-h5",
-    title: "playbackSoundBadge__titleLink sc-truncate sc-text-h5 sc-link-primary"
+    title: "playbackSoundBadge__titleLink sc-truncate sc-text-h5 sc-link-primary",
+    progress_bar: "playbackTimeline__progressWrapper sc-mx-1x"
 }
+
+function getData() {
+    console.log(`Data: ${JSON.stringify(getTrackInfo())}`)
+    setTimeout(getData, 3000)
+}
+
+getData()
 
 function getAlbumArt(): string | null {
     const element = getFirstElement(classes.album_art)
@@ -31,10 +40,32 @@ function getArtist(): string | null {
     return getLinkTitle(classes.artist)
 }
 
-// TODO: Remove this
-setTimeout(function doSomething() {
-    console.log(`Album art: ${getAlbumArt()}`)
-    console.log(`Song: ${getTitle()} by ${getArtist()}`)
+function getDuration(): number | null {
+    const element = getFirstElement(classes.progress_bar)
+    if (!element) return null
 
-    setTimeout(doSomething, 3000)
-}, 3000)
+    const valuemax = element.getAttribute("aria-valuemax")
+    if (!valuemax) return null
+
+    return parseInt(valuemax) * 1000
+}
+
+function getElapsed(): number | null {
+    const element = getFirstElement(classes.progress_bar)
+    if (!element) return null
+
+    const valuenow = element.getAttribute("aria-valuenow")
+    if (!valuenow) return null
+
+    return parseInt(valuenow) * 1000
+}
+
+function getTrackInfo(): TrackInfo | null {
+    const title = getTitle() ?? "Unknown title"
+    const artist = getArtist() ?? "Unknown artist"
+    const album_art = getAlbumArt()
+    const duration = getDuration() ?? 0
+    const elapsed = getElapsed() ?? 0
+
+    return { title, artist, album_art, timestamps: { duration, elapsed } }
+}
