@@ -6,7 +6,7 @@ async function sendData() {
     if (!info) return
 
     try {
-        await ClientConnection.getInstance().sendTrack(info)
+        ClientConnection.getInstance().sendTrack(info)
     } catch (e) {
         console.error(`Failed to send track information to the MediaMod client: ${JSON.stringify(info)}`)
     }
