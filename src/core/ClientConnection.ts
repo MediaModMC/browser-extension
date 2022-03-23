@@ -45,8 +45,12 @@ export default class ClientConnection {
                 console.log("Received handshake from MediaMod client!")
 
                 this.token = message.data.token
+                this.sendMessage("HEARTBEAT", null)
                 break
             case "HEARTBEAT":
+                setTimeout(() => {
+                    this.sendMessage("HEARTBEAT", null)
+                }, 500)
                 break
             default:
                 console.log(`Message received (${message.id}): ${message.data}`)
