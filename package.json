@@ -9,5 +9,8 @@
         "@parcel/config-webextension": "^2.3.2",
         "@types/chrome": "^0.0.180",
         "parcel": "^2.3.2"
+    },
+    "dependencies": {
+        "reconnecting-websocket": "^4.4.0"
     }
 }

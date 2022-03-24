@@ -1,22 +1,26 @@
 import { TrackInfo } from "./types"
 import { getTrackInfo } from "../services/soundcloud/util"
+import ReconnectingWebSocket from "reconnecting-websocket"
 
 export default class ClientConnection {
     private static instance: ClientConnection
     private static url = "ws://localhost:9104"
+    private static options = {
+        connectionTimeout: 7500
+    }
 
-    private socket: WebSocket
+    private socket: ReconnectingWebSocket | null
     private token: string | null
     private trackFunction: (() => TrackInfo | null) | null
 
     private constructor() {
-        this.socket = new WebSocket(ClientConnection.url)
-        this.token = null
-        this.trackFunction = null
-
+        this.socket = new ReconnectingWebSocket(ClientConnection.url, [], ClientConnection.options)
         this.socket.onopen = () => this.onOpen()
         this.socket.onclose = () => this.onClose()
         this.socket.onmessage = (event) => this.onMessage(event)
+
+        this.token = null
+        this.trackFunction = null
     }
 
     public static getInstance(): ClientConnection {
@@ -30,6 +34,7 @@ export default class ClientConnection {
         this.trackFunction = func
     }
 
+
     private onOpen() {
         console.log("Connection opened with MediaMod client!")
         this.sendMessage("HANDSHAKE", null)
@@ -39,8 +44,6 @@ export default class ClientConnection {
     private onClose() {
         console.warn("Connection closed by the MediaMod client!")
         this.token = null
-
-        // TODO: Attempt to reconnect every 3 seconds
     }
 
     private onMessage(event: MessageEvent) {
@@ -72,7 +75,7 @@ export default class ClientConnection {
     }
 
     private sendMessage(id: string, data: Object | null) {
-        if (this.socket.readyState != WebSocket.OPEN) return
+        if (this.socket?.readyState != WebSocket.OPEN) return
         if (this.token == null && id != "HANDSHAKE") return
 
         this.socket.send(JSON.stringify({ id: id, data: data, token: this.token }))
