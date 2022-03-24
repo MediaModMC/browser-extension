@@ -2,7 +2,7 @@ import { getFirstElement } from "../../utils/dom"
 import { TrackInfo } from "../../core/types"
 
 const classes = {
-    album_art: "sc-artwork sc-artwork-4x sc-artwork-placeholder-10  image__full g-opacity-transition",
+    album_art: "sc-artwork sc-artwork-4x image__full g-opacity-transition",
     artist: "playbackSoundBadge__lightLink sc-link-light sc-link-secondary sc-truncate sc-text-h5",
     title: "playbackSoundBadge__titleLink sc-truncate sc-text-h5 sc-link-primary",
     progress_bar: "playbackTimeline__progressWrapper sc-mx-1x",
