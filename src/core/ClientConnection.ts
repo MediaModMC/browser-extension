@@ -1,4 +1,5 @@
 import { TrackInfo } from "./types"
+import { getTrackInfo } from "../services/soundcloud/util"
 
 export default class ClientConnection {
     private static instance: ClientConnection
@@ -6,10 +7,12 @@ export default class ClientConnection {
 
     private socket: WebSocket
     private token: string | null
+    private trackFunction: (() => TrackInfo | null) | null
 
     private constructor() {
         this.socket = new WebSocket(ClientConnection.url)
         this.token = null
+        this.trackFunction = null
 
         this.socket.onopen = () => this.onOpen()
         this.socket.onclose = () => this.onClose()
@@ -23,8 +26,8 @@ export default class ClientConnection {
         return ClientConnection.instance
     }
 
-    public sendTrack(info: TrackInfo) {
-        this.sendMessage("TRACK", info)
+    public bind(func: (() => TrackInfo | null)) {
+        this.trackFunction = func
     }
 
     private onOpen() {
@@ -35,10 +38,14 @@ export default class ClientConnection {
     // noinspection JSMethodCanBeStatic
     private onClose() {
         console.warn("Connection closed by the MediaMod client!")
+        this.token = null
+
+        // TODO: Attempt to reconnect every 3 seconds
     }
 
     private onMessage(event: MessageEvent) {
         const message = JSON.parse(event.data)
+        console.log(`Received message: ${JSON.stringify(message)}`)
 
         switch (message.id) {
             case "HANDSHAKE":
@@ -51,6 +58,12 @@ export default class ClientConnection {
                 setTimeout(() => {
                     this.sendMessage("HEARTBEAT", null)
                 }, 500)
+
+                break
+            case "TRACK":
+                const track = getTrackInfo?.()
+                this.sendMessage("TRACK", { track, nonce: message.data.nonce })
+
                 break
             default:
                 console.log(`Message received (${message.id}): ${message.data}`)
