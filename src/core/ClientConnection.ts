@@ -57,7 +57,7 @@ export default class ClientConnection {
             case "HEARTBEAT":
                 setTimeout(() => {
                     this.sendMessage("HEARTBEAT", null)
-                }, 500)
+                }, 1000)
 
                 break
             case "TRACK":
