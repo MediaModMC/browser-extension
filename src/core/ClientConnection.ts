@@ -1,5 +1,4 @@
 import { TrackInfo } from "./types"
-import { getTrackInfo } from "../services/soundcloud/util"
 import ReconnectingWebSocket from "reconnecting-websocket"
 
 export default class ClientConnection {
@@ -34,7 +33,6 @@ export default class ClientConnection {
         this.trackFunction = func
     }
 
-
     private onOpen() {
         console.log("Connection opened with MediaMod client!")
         this.sendMessage("HANDSHAKE", null)
@@ -64,7 +62,7 @@ export default class ClientConnection {
 
                 break
             case "TRACK":
-                const track = getTrackInfo?.()
+                const track = this.trackFunction?.()
                 this.sendMessage("TRACK", { track, nonce: message.data.nonce })
 
                 break
