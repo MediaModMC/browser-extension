@@ -14,6 +14,14 @@
             "js": [
                 "services/soundcloud/script.ts"
             ]
+        },
+        {
+            "matches": [
+                "*://*.youtube.com/*"
+            ],
+            "js": [
+                "services/youtube/script.ts"
+            ]
         }
     ]
 }
