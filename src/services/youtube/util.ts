@@ -6,10 +6,7 @@ const classes = {
         parent: "title style-scope ytd-video-primary-info-renderer", // h1
         child: "style-scope ytd-video-primary-info-renderer" // yt-formatted-string
     },
-    artist: {
-        parent: "style-scope ytd-channel-name", // yt-formatted-string
-        child: "yt-simple-endpoint style-scope yt-formatted-string" // a
-    },
+    artist: "#upload-info div#text-container.ytd-channel-name a",
     progress_bar: "ytp-progress-bar",
     play_button: "ytp-play-button ytp-button"
 }
@@ -22,6 +19,10 @@ function getFormattedString(classes: { parent: string; child: string }): string 
     if (!child) return null
 
     return child.textContent
+}
+
+function getArtist(): string | null {
+    return document.querySelectorAll(classes.artist)?.item(0)?.textContent
 }
 
 function getAlbumArt(): string | null {
@@ -68,7 +69,7 @@ export function getTrackInfo(): TrackInfo | null {
     const title = getFormattedString(classes.title)
     if (!title) return null
 
-    const artist = getFormattedString(classes.artist)
+    const artist = getArtist()
     if (!artist) return null
 
     const album_art = getAlbumArt()
