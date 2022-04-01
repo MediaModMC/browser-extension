@@ -22,6 +22,14 @@
             "js": [
                 "services/youtube/script.ts"
             ]
+        },
+        {
+            "matches": [
+                "*://music.apple.com/*"
+            ],
+            "js": [
+                "services/applemusic/script.ts"
+            ]
         }
     ]
 }
