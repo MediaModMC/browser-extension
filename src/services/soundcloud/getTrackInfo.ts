@@ -33,7 +33,7 @@ function isPaused(): boolean {
     return !element.classList.contains("playing")
 }
 
-export function getTrackInfo(): TrackInfo | null {
+export default function getTrackInfo(): TrackInfo | null {
     const title = getLinkTitle(classes.title) ?? "Unknown title"
     const artist = getLinkTitle(classes.artist) ?? "Unknown artist"
     const album_art = getAlbumArt()

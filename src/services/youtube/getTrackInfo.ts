@@ -45,7 +45,7 @@ function isPaused(): boolean {
     return title_attribute.toLowerCase().includes("play")
 }
 
-export function getTrackInfo(): TrackInfo | null {
+export default function getTrackInfo(): TrackInfo | null {
     const title = getFormattedString(classes.title)
     if (!title) return null
 

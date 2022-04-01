@@ -1,4 +1,4 @@
-import { getTrackInfo } from "./util"
 import ClientConnection from "../../core/ClientConnection"
+import getTrackInfo from "./getTrackInfo"
 
 ClientConnection.getInstance().bind(getTrackInfo)

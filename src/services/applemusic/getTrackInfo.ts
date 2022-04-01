@@ -58,7 +58,7 @@ function isPaused(): boolean {
     return aria_label.toLowerCase().includes("play")
 }
 
-export function getTrackInfo(): TrackInfo | null {
+export default function getTrackInfo(): TrackInfo | null {
     const title = getTitle() ?? "Unknown title"
     const artist = getArtist() ?? "Unknown artist"
     const album_art = getAlbumArt()
