@@ -1,4 +1,4 @@
-import { getFirstElement } from "../../utils/dom"
+import { getFirstElement, getProgressDuration, getProgressElapsed } from "../../utils/dom"
 import { TrackInfo } from "../../core/types"
 
 const classes = {
@@ -35,26 +35,6 @@ function getAlbumArt(): string | null {
     return `https://img.youtube.com/vi/${video_id}/hqdefault.jpg`
 }
 
-function getDuration(): number | null {
-    const element = getFirstElement(classes.progress_bar)
-    if (!element) return null
-
-    const valuemax = element.getAttribute("aria-valuemax")
-    if (!valuemax) return null
-
-    return parseInt(valuemax) * 1000
-}
-
-function getElapsed(): number | null {
-    const element = getFirstElement(classes.progress_bar)
-    if (!element) return null
-
-    const valuenow = element.getAttribute("aria-valuenow")
-    if (!valuenow) return null
-
-    return parseInt(valuenow) * 1000
-}
-
 function isPaused(): boolean {
     const play_button = getFirstElement(classes.play_button)
     if (!play_button) return true
@@ -75,8 +55,8 @@ export function getTrackInfo(): TrackInfo | null {
     const album_art = getAlbumArt()
     if (!album_art) return null
 
-    const elapsed = getElapsed() ?? 0
-    const duration = getDuration() ?? 0
+    const elapsed = getProgressElapsed(classes.progress_bar) ?? 0
+    const duration = getProgressDuration(classes.progress_bar) ?? 0
     const paused = isPaused()
 
     return { title, artist, album_art, timestamps: { duration, elapsed }, paused }

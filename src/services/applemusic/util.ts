@@ -1,4 +1,4 @@
-import { getFirstElement } from "../../utils/dom"
+import { getFirstElement, getProgressDuration, getProgressElapsed } from "../../utils/dom"
 import { TrackInfo } from "../../core/types"
 
 const classes = {
@@ -48,26 +48,6 @@ function getAlbumArt(): string | null {
     return src.replace("88w", "").replace("88x88", "512x512").trim()
 }
 
-function getDuration(): number | null {
-    const element = getFirstElement(classes.progress_bar)
-    if (!element) return null
-
-    const valuemax = element.getAttribute("aria-valuemax")
-    if (!valuemax) return null
-
-    return parseInt(valuemax) * 1000
-}
-
-function getElapsed(): number | null {
-    const element = getFirstElement(classes.progress_bar)
-    if (!element) return null
-
-    const valuenow = element.getAttribute("aria-valuenow")
-    if (!valuenow) return null
-
-    return parseInt(valuenow) * 1000
-}
-
 function isPaused(): boolean {
     const element = document.getElementsByClassName(classes.play_button)?.item(1)
     if (!element) return true
@@ -82,10 +62,9 @@ export function getTrackInfo(): TrackInfo | null {
     const title = getTitle() ?? "Unknown title"
     const artist = getArtist() ?? "Unknown artist"
     const album_art = getAlbumArt()
-    const duration = getDuration() ?? 0
-    const elapsed = getElapsed() ?? 0
+    const elapsed = getProgressElapsed(classes.progress_bar) ?? 0
+    const duration = getProgressDuration(classes.progress_bar) ?? 0
     const paused = isPaused()
 
-    console.log(JSON.stringify({ title, artist, album_art, timestamps: { duration, elapsed }, paused }))
     return { title, artist, album_art, timestamps: { duration, elapsed }, paused }
 }

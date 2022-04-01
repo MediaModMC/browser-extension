@@ -1,4 +1,4 @@
-import { getFirstElement } from "../../utils/dom"
+import { getFirstElement, getProgressDuration, getProgressElapsed } from "../../utils/dom"
 import { TrackInfo } from "../../core/types"
 
 const classes = {
@@ -26,26 +26,6 @@ function getAlbumArt(): string | null {
     return cssValue.slice(4, -1).replace(/"/g, "").replace("50x50", "500x500")
 }
 
-function getDuration(): number | null {
-    const element = getFirstElement(classes.progress_bar)
-    if (!element) return null
-
-    const valuemax = element.getAttribute("aria-valuemax")
-    if (!valuemax) return null
-
-    return parseInt(valuemax) * 1000
-}
-
-function getElapsed(): number | null {
-    const element = getFirstElement(classes.progress_bar)
-    if (!element) return null
-
-    const valuenow = element.getAttribute("aria-valuenow")
-    if (!valuenow) return null
-
-    return parseInt(valuenow) * 1000
-}
-
 function isPaused(): boolean {
     const element = getFirstElement(classes.play_button)
     if (!element) return true
@@ -57,8 +37,8 @@ export function getTrackInfo(): TrackInfo | null {
     const title = getLinkTitle(classes.title) ?? "Unknown title"
     const artist = getLinkTitle(classes.artist) ?? "Unknown artist"
     const album_art = getAlbumArt()
-    const duration = getDuration() ?? 0
-    const elapsed = getElapsed() ?? 0
+    const elapsed = getProgressElapsed(classes.progress_bar) ?? 0
+    const duration = getProgressDuration(classes.progress_bar) ?? 0
     const paused = isPaused()
 
     return { title, artist, album_art, timestamps: { duration, elapsed }, paused }
