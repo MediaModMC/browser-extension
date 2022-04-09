@@ -30,6 +30,14 @@
             "js": [
                 "services/applemusic/script.ts"
             ]
+        },
+        {
+            "matches": [
+                "*://listen.tidal.com/*"
+            ],
+            "js": [
+                "services/tidal/script.ts"
+            ]
         }
     ]
 }

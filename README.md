@@ -13,6 +13,7 @@ The browser extension (for Chrome and Firefox) to provide MediaMod Integration w
 - YouTube (`*.youtube.com/watch?v=*`)
 - SoundCloud (`*.soundcloud.com/*`)
 - Apple Music (`music.apple.com/*`)
+- Tidal (`listen.tidal.com/*`)
 
 **Planned:**
 
